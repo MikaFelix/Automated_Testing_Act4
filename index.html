@@ -3,94 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IPeep - Quick IP Lookup</title>
+    <title>IPeep</title>
     <style>
-        * {
+        body {
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-        body, html {
-            height: 100%;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            font-family: 'Arial', sans-serif;
-            background-color: #ece9e6;
-            background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
-        }
-        .container {
-            max-width: 600px;
-            padding: 30px;
-            background-color: #fff;
-            border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f8ff;
             text-align: center;
         }
+
+        .container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 90%;
+        }
+
         h1 {
-            font-size: 2.5rem;
+            margin: 0;
+            font-size: 24px;
             color: #333;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+
+        .query-history {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #ccc;
+        }
+
+        .history-item {
+            background-color: #f9f9f9;
             margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
         }
-        .eye-icon {
-            font-size: 50px;
-            color: #ff6666;
-        }
-        .subtitle {
-            font-size: 1.2rem;
-            color: #666;
-            margin-bottom: 20px;
-        }
-        .ip-info {
-            font-size: 1.2rem;
-            margin: 15px 0;
-            color: #333;
-        }
-        .ip-info strong {
-            color: #ff6666;
-        }
+
         footer {
-            margin-top: 30px;
-            color: #888;
-            font-size: 0.9rem;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #666;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Playful header with eye icon -->
-        <div class="eye-icon">👁️</div>
-        <h1>IPeep</h1>
-        <p class="subtitle">Take a quick peep at your IP info!</p>
+        <h1>Welcome to IPeep 👀</h1>
+        <p><strong>Your Public IP:</strong> {{ ip_info['ip'] }}</p>
+        <p><strong>City:</strong> {{ ip_info['city'] }}</p>
+        <p><strong>Region:</strong> {{ ip_info['region'] }}</p>
+        <p><strong>Country:</strong> {{ ip_info['country_name'] }}</p>
+        <p><strong>Latitude:</strong> {{ ip_info['latitude'] }}</p>
+        <p><strong>Longitude:</strong> {{ ip_info['longitude'] }}</p>
+        <p><strong>ISP:</strong> {{ ip_info['org'] }}</p>
+        <p><strong>Timezone:</strong> {{ ip_info['timezone'] }}</p>
+        
+        <h2>Device Info</h2>
+        <p><strong>Operating System:</strong> {{ device_info['platform'] }}</p>
+        <p><strong>Browser:</strong> {{ device_info['browser'] }}</p>
+        <p><strong>Version:</strong> {{ device_info['version'] }}</p>
+        <p><strong>Language:</strong> {{ device_info['language'] }}</p>
 
-        <!-- Display IP Information -->
-        <div class="ip-info">
-            <strong>Public IPv4 Address:</strong> {{ ip_info.ipv4 }}
+        <div class="query-history">
+            <h2>Query History</h2>
+            {% if query_history %}
+                {% for query in query_history %}
+                <div class="history-item">
+                    <p><strong>IP:</strong> {{ query['ip'] }}</p>
+                    <p><strong>Location:</strong> {{ query['city'] }}, {{ query['region'] }}, {{ query['country_name'] }}</p>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>No history available.</p>
+            {% endif %}
         </div>
-        <div class="ip-info">
-            <strong>Public IPv6 Address:</strong> {{ ip_info.ipv6 }}
-        </div>
-        <div class="ip-info">
-            <strong>ISP:</strong> {{ ip_info.isp }}
-        </div>
-        <div class="ip-info">
-            <strong>ASN:</strong> {{ ip_info.asn }}
-        </div>
-        <div class="ip-info">
-            <strong>Location:</strong> {{ ip_info.city }}, {{ ip_info.region }}, {{ ip_info.country }}
-        </div>
-
-        <!-- Error handling (if there's any issue fetching the data) -->
-        {% if ip_info.error %}
-        <div class="ip-info" style="color:red;">
-            {{ ip_info.error }}
-        </div>
-        {% endif %}
-
-        <!-- Fun footer for branding -->
-        <footer>
-            <p>Powered by IPeep 👀 – A quick peek at your IP!</p>
-        </footer>
     </div>
+
+    <footer>
+        Made with ❤️ by IPeep
+    </footer>
 </body>
 </html>
