@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPeep - Quick IP Lookup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body, html {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            background-color: #ece9e6;
+            background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+        }
+        .container {
+            max-width: 600px;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .eye-icon {
+            font-size: 50px;
+            color: #ff6666;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .ip-info {
+            font-size: 1.2rem;
+            margin: 15px 0;
+            color: #333;
+        }
+        .ip-info strong {
+            color: #ff6666;
+        }
+        footer {
+            margin-top: 30px;
+            color: #888;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Playful header with eye icon -->
+        <div class="eye-icon">👁️</div>
+        <h1>IPeep</h1>
+        <p class="subtitle">Take a quick peep at your IP info!</p>
+
+        <!-- Display IP Information -->
+        <div class="ip-info">
+            <strong>Public IPv4 Address:</strong> {{ ip_info.ipv4 }}
+        </div>
+        <div class="ip-info">
+            <strong>Public IPv6 Address:</strong> {{ ip_info.ipv6 }}
+        </div>
+        <div class="ip-info">
+            <strong>ISP:</strong> {{ ip_info.isp }}
+        </div>
+        <div class="ip-info">
+            <strong>ASN:</strong> {{ ip_info.asn }}
+        </div>
+        <div class="ip-info">
+            <strong>Location:</strong> {{ ip_info.city }}, {{ ip_info.region }}, {{ ip_info.country }}
+        </div>
+
+        <!-- Error handling (if there's any issue fetching the data) -->
+        {% if ip_info.error %}
+        <div class="ip-info" style="color:red;">
+            {{ ip_info.error }}
+        </div>
+        {% endif %}
+
+        <!-- Fun footer for branding -->
+        <footer>
+            <p>Powered by IPeep 👀 – A quick peek at your IP!</p>
+        </footer>
+    </div>
+</body>
+</html>
